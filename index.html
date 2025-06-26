@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nature Memories Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="logo">🌿 Nature Memories</div>
+    <ul>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#memory-wall">Memory Wall</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Welcome to Nature Memories</h1>
+    <p>Celebrate moments, share memories, and enjoy the beauty of nature.</p>
+    <button id="scrollGallery">View Gallery</button>
+  </header>
+
+  <main>
+    <section id="gallery" class="gallery-section">
+      <h2>Photo & Video Gallery</h2>
+      <!-- Tag filter UI -->
+      <div class="tag-filter" id="tagFilter"></div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- JS populates gallery -->
+      </div>
+    </section>
+
+    <section id="memory-wall" class="memory-wall-section">
+      <h2>Memory Wall</h2>
+      <div class="memory-masonry" id="memoryMasonry">
+        <!-- JS populates memory wall -->
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <h2>Contact / Submit Your Memory</h2>
+      <form id="contactForm" autocomplete="off">
+        <label>Name <input type="text" name="name" required></label>
+        <label>Email <input type="email" name="email" required></label>
+        <label>Message <textarea name="message" rows="4" required></textarea></label>
+        <button type="submit">Send</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Nature Memories. All rights reserved.</p>
+  </footer>
+
+  <div id="lightbox" class="lightbox hidden">
+    <span class="close" id="closeLightbox">&times;</span>
+    <div class="lightbox-content" id="lightboxContent"></div>
+    <a href="#" download id="downloadBtn" class="download-btn">Download</a>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
