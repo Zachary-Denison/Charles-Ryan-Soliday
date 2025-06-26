@@ -2,57 +2,113 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nature Memories Gallery</title>
+  <title>Remembering Charles Ryan Soliday</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <nav>
-    <div class="logo">🌿 Nature Memories</div>
+    <div class="logo">✨ Charles Ryan Soliday Memories</div>
     <ul>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#memory-wall">Memory Wall</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#gallery" id="navGallery">Gallery</a></li>
+      <li><a href="#videos" id="navVideos">Videos</a></li>
+      <li><a href="#quotes" id="navQuotes">Quotes</a></li>
+      <li><a href="#memory-wall" id="navMemoryWall">Memory Wall</a></li>
+      <li><a href="#submit" id="navSubmit">Submit</a></li>
     </ul>
   </nav>
 
-  <header class="hero">
-    <h1>Welcome to Nature Memories</h1>
-    <p>Celebrate moments, share memories, and enjoy the beauty of nature.</p>
-    <button id="scrollGallery">View Gallery</button>
-  </header>
+  <!-- Trip Down Memory Lane Feature -->
+  <section class="trip-memory-lane" id="tripMemoryLane">
+    <h2>✨ Trip Down Memory Lane</h2>
+    <div class="trip-controls">
+      <div class="trip-tags" id="tripTags"></div>
+      <button id="memoryLaneRandomBtn">Show Me a Memory</button>
+      <button id="memoryLaneNextBtn" style="display:none">Next</button>
+      <div class="trip-display" id="tripDisplay"></div>
+    </div>
+  </section>
 
   <main>
+    <!-- GALLERY PHOTOS -->
     <section id="gallery" class="gallery-section">
-      <h2>Photo & Video Gallery</h2>
-      <!-- Tag filter UI -->
-      <div class="tag-filter" id="tagFilter"></div>
+      <h2>Photo Gallery</h2>
+      <div class="tag-filter" id="tagFilterPhotos"></div>
       <div class="gallery-grid" id="galleryGrid">
-        <!-- JS populates gallery -->
+        <!-- JS: Photos will go here -->
       </div>
     </section>
 
+    <!-- VIDEOS -->
+    <section id="videos" class="videos-section">
+      <h2>Video Gallery</h2>
+      <div class="tag-filter" id="tagFilterVideos"></div>
+      <div class="gallery-grid" id="videoGrid">
+        <!-- JS: Videos will go here -->
+      </div>
+    </section>
+
+    <!-- QUOTES -->
+    <section id="quotes" class="quotes-section">
+      <h2>Quotes & Stories</h2>
+      <div class="quotes-list" id="quotesList">
+        <!-- JS: Quotes go here -->
+      </div>
+    </section>
+
+    <!-- MEMORY WALL -->
     <section id="memory-wall" class="memory-wall-section">
       <h2>Memory Wall</h2>
       <div class="memory-masonry" id="memoryMasonry">
-        <!-- JS populates memory wall -->
+        <!-- JS: Memories go here -->
       </div>
     </section>
 
-    <section id="contact" class="contact-section">
-      <h2>Contact / Submit Your Memory</h2>
-      <form id="contactForm" autocomplete="off">
-        <label>Name <input type="text" name="name" required></label>
-        <label>Email <input type="email" name="email" required></label>
-        <label>Message <textarea name="message" rows="4" required></textarea></label>
-        <button type="submit">Send</button>
+    <!-- SUBMIT FORM -->
+    <section id="submit" class="contact-section">
+      <h2>Share a Memory</h2>
+      <form id="submitForm" autocomplete="off" enctype="multipart/form-data">
+        <label>
+          Your Name (optional)
+          <input type="text" name="name">
+        </label>
+        <label>
+          Email (for follow-up or approval, optional)
+          <input type="email" name="email">
+        </label>
+        <label>
+          What are you submitting?
+          <select name="type" required>
+            <option value="">--Select--</option>
+            <option value="photo">Photo</option>
+            <option value="video">Video</option>
+            <option value="quote">Quote</option>
+            <option value="memory">Memory</option>
+          </select>
+        </label>
+        <label id="fileUploadSection" style="display:none">
+          Upload File
+          <input type="file" name="file" accept="image/*,video/*">
+        </label>
+        <label id="quoteInputSection" style="display:none">
+          Your Quote or Memory
+          <textarea name="quoteText" rows="4"></textarea>
+        </label>
+        <label>
+          Tags (comma separated, optional)
+          <input type="text" name="tags" placeholder="e.g. school, family, summer">
+        </label>
+        <button type="submit">Submit</button>
         <div class="form-status" id="formStatus"></div>
       </form>
+      <div class="submission-note">
+        <strong>Note:</strong> Submissions are reviewed before being posted. You will receive a confirmation/approval email.
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Nature Memories. All rights reserved.</p>
+    <p>&copy; 2025 Remembering Charles Ryan Soliday. All rights reserved.</p>
   </footer>
 
   <div id="lightbox" class="lightbox hidden">
