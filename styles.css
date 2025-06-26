@@ -1,25 +1,28 @@
 :root {
-  --turquoise: #34e7e4;
-  --turquoise-dark: #25bfbf;
-  --purple: #9d50bb;
-  --purple-dark: #6e3690;
-  --accent: #fd5fff;
-  --shadow: 0 4px 24px rgba(60,0,80,0.08);
+  --leaf: #3ebd4d;
+  --leaf-dark: #287d36;
+  --earth: #ba9774;
+  --earth-dark: #85623a;
+  --sky: #a6e2ff;
+  --sky-dark: #5aaed6;
+  --accent-flower: #fdcfff;
+  --shadow: 0 4px 24px rgba(60,60,0,0.09);
   --transition: 0.33s cubic-bezier(.85,0,.15,1);
-  --bg: #f7f7fc;
+  --bg: #f3f8f3;
   --white: #fff;
 }
 
 body {
-  background: var(--bg);
+  background: linear-gradient(180deg, var(--sky) 0%, var(--bg) 100%);
   margin: 0;
   font-family: 'Segoe UI', 'Helvetica', Arial, sans-serif;
-  color: var(--purple-dark);
+  color: var(--leaf-dark);
   transition: background var(--transition), color var(--transition);
+  min-height: 100vh;
 }
 
 nav {
-  background: linear-gradient(90deg, var(--turquoise-dark) 0%, var(--purple-dark) 100%);
+  background: linear-gradient(90deg, var(--leaf-dark) 0%, var(--earth-dark) 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,11 +30,11 @@ nav {
   box-shadow: var(--shadow);
 }
 nav .logo {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: bold;
   letter-spacing: 1px;
   color: var(--white);
-  text-shadow: 1px 1px 0 var(--purple), 2px 2px 8px var(--accent);
+  text-shadow: 1px 1px 0 var(--leaf), 2px 2px 8px var(--accent-flower);
 }
 nav ul {
   list-style: none;
@@ -45,16 +48,16 @@ nav a {
   color: var(--white);
   font-weight: 500;
   transition: color var(--transition), text-shadow var(--transition);
-  text-shadow: 1px 1px 0 var(--turquoise-dark);
+  text-shadow: 1px 1px 0 var(--leaf-dark);
 }
 nav a:hover {
-  color: var(--accent);
-  text-shadow: 0 0 6px var(--turquoise);
+  color: var(--accent-flower);
+  text-shadow: 0 0 6px var(--leaf);
 }
 
 /* Trip Down Memory Lane */
 .trip-memory-lane {
-  background: linear-gradient(120deg, var(--turquoise) 0%, var(--purple) 100%);
+  background: linear-gradient(120deg, var(--sky-dark) 0%, var(--leaf) 100%);
   padding: 1.8rem 1.2rem 1.5rem 1.2rem;
   text-align: center;
   transition: background var(--transition);
@@ -67,7 +70,7 @@ nav a:hover {
   margin-top: 0;
   font-size: 1.6rem;
   color: var(--white);
-  text-shadow: 1px 1px var(--purple-dark);
+  text-shadow: 1px 1px var(--leaf-dark);
 }
 .trip-controls {
   display: flex;
@@ -87,7 +90,7 @@ nav a:hover {
   margin-right: auto;
 }
 .trip-controls button {
-  background: var(--purple-dark);
+  background: var(--leaf-dark);
   color: var(--white);
   border: none;
   border-radius: 18px;
@@ -99,8 +102,8 @@ nav a:hover {
   transition: background var(--transition), color var(--transition);
 }
 .trip-controls button:hover {
-  background: var(--turquoise);
-  color: var(--purple-dark);
+  background: var(--sky);
+  color: var(--leaf-dark);
 }
 
 main {
@@ -115,12 +118,12 @@ section {
 
 h2 {
   margin-top: 0;
-  color: var(--purple-dark);
+  color: var(--leaf-dark);
   font-size: 1.4rem;
-  border-bottom: 2px solid var(--turquoise);
+  border-bottom: 2px solid var(--leaf);
   padding-bottom: 0.4rem;
   letter-spacing: 1px;
-  text-shadow: 0 1px var(--turquoise-dark);
+  text-shadow: 0 1px var(--earth-dark);
 }
 
 .tag-filter {
@@ -130,7 +133,7 @@ h2 {
   gap: 0.5rem;
 }
 .tag-btn {
-  background: var(--turquoise-dark);
+  background: var(--leaf-dark);
   color: var(--white);
   border: none;
   border-radius: 16px;
@@ -140,14 +143,14 @@ h2 {
   transition: background var(--transition), color var(--transition), transform var(--transition);
   box-shadow: var(--shadow);
   font-weight: bold;
-  text-shadow: 1px 1px 0 var(--purple);
+  text-shadow: 1px 1px 0 var(--earth);
 }
 .tag-btn.active,
 .tag-btn:hover {
-  background: var(--purple);
-  color: var(--white);
+  background: var(--earth);
+  color: var(--leaf-dark);
   transform: translateY(-1px) scale(1.06);
-  text-shadow: 1px 1px 4px var(--accent);
+  text-shadow: 1px 1px 4px var(--accent-flower);
 }
 
 .gallery-grid {
@@ -166,12 +169,12 @@ h2 {
   cursor: pointer;
   transition: transform var(--transition), box-shadow var(--transition);
   will-change: transform;
-  border: 2px solid var(--turquoise-dark);
+  border: 2px solid var(--leaf-dark);
 }
 .gallery-item:hover {
   transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 6px 36px var(--accent);
-  border-color: var(--accent);
+  box-shadow: 0 6px 36px var(--accent-flower);
+  border-color: var(--accent-flower);
 }
 .gallery-item img,
 .gallery-item video {
@@ -180,13 +183,13 @@ h2 {
   object-fit: cover;
   height: 180px;
   transition: filter var(--transition);
-  background: var(--turquoise-dark);
+  background: var(--sky-dark);
 }
 .gallery-item .play-btn {
   position: absolute;
   bottom: 12px;
   right: 18px;
-  background: var(--turquoise-dark);
+  background: var(--leaf-dark);
   color: var(--white);
   border: none;
   border-radius: 50%;
@@ -198,11 +201,11 @@ h2 {
   opacity: 0.89;
   cursor: pointer;
   transition: background var(--transition);
-  box-shadow: 0 2px 8px var(--purple-dark);
+  box-shadow: 0 2px 8px var(--earth-dark);
 }
 .gallery-item .play-btn:hover {
-  background: var(--accent);
-  color: var(--purple-dark);
+  background: var(--accent-flower);
+  color: var(--leaf-dark);
 }
 
 .quotes-list {
@@ -212,20 +215,20 @@ h2 {
   gap: 1.1rem;
 }
 .quote-block {
-  background: linear-gradient(90deg, var(--turquoise) 0%, var(--purple) 100%);
+  background: linear-gradient(90deg, var(--sky) 0%, var(--leaf) 100%);
   border-radius: 18px;
   box-shadow: var(--shadow);
   padding: 1.2rem 1rem 1.2rem 2.2rem;
   position: relative;
   font-style: italic;
-  color: var(--white);
-  border-left: 5px solid var(--accent);
-  text-shadow: 1px 1px 3px var(--purple-dark);
+  color: var(--leaf-dark);
+  border-left: 5px solid var(--accent-flower);
+  text-shadow: 1px 1px 3px var(--earth-dark);
 }
 .quote-block:before {
   content: "“";
   font-size: 2.5rem;
-  color: var(--accent);
+  color: var(--accent-flower);
   position: absolute;
   left: 0.7rem;
   top: 0.3rem;
@@ -233,7 +236,7 @@ h2 {
 .quote-author {
   display: block;
   margin-top: 0.7em;
-  color: var(--turquoise-dark);
+  color: var(--leaf);
   font-style: normal;
   font-size: 1rem;
   font-weight: 500;
@@ -246,7 +249,7 @@ h2 {
   margin-top: 1.2rem;
 }
 .memory-block {
-  background: linear-gradient(100deg, var(--turquoise-dark) 0%, var(--purple-dark) 100%);
+  background: linear-gradient(100deg, var(--leaf-dark) 0%, var(--earth-dark) 100%);
   margin-bottom: 1.5rem;
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -256,7 +259,7 @@ h2 {
   transform: translateY(30px);
   animation: fadeInUp 0.8s forwards;
   color: var(--white);
-  border-left: 6px solid var(--accent);
+  border-left: 6px solid var(--accent-flower);
 }
 @keyframes fadeInUp {
   to {
@@ -266,19 +269,19 @@ h2 {
 }
 .memory-block h4 {
   margin: 0 0 0.3rem 0;
-  color: var(--accent);
-  text-shadow: 1px 1px 2px var(--turquoise-dark);
+  color: var(--accent-flower);
+  text-shadow: 1px 1px 2px var(--leaf);
 }
 .memory-block p {
   margin: 0.2rem 0 0 0;
-  color: #e9defa;
+  color: #f7f8f3;
 }
 
 .contact-section form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: var(--purple-dark);
+  background: var(--leaf-dark);
   padding: 2rem;
   border-radius: 18px;
   box-shadow: var(--shadow);
@@ -287,12 +290,12 @@ h2 {
 }
 .contact-section label {
   font-weight: 500;
-  color: var(--turquoise);
+  color: var(--earth);
 }
 .contact-section input, 
 .contact-section textarea, 
 .contact-section select {
-  border: 1px solid var(--turquoise);
+  border: 1px solid var(--leaf);
   border-radius: 8px;
   padding: 0.7rem;
   font-size: 1rem;
@@ -301,17 +304,17 @@ h2 {
   font-family: inherit;
   background: var(--white);
   transition: border var(--transition), background var(--transition);
-  color: var(--purple-dark);
+  color: var(--leaf-dark);
 }
 .contact-section input:focus, 
 .contact-section textarea:focus,
 .contact-section select:focus {
-  border: 1.5px solid var(--accent);
-  background: #f7efff;
+  border: 1.5px solid var(--accent-flower);
+  background: #f7fff3;
   outline: none;
 }
 .contact-section button {
-  background: var(--turquoise-dark);
+  background: var(--leaf-dark);
   color: var(--white);
   border: none;
   border-radius: 24px;
@@ -321,26 +324,26 @@ h2 {
   transition: background var(--transition), color var(--transition);
 }
 .contact-section button:hover {
-  background: var(--accent);
-  color: var(--purple-dark);
+  background: var(--accent-flower);
+  color: var(--leaf-dark);
 }
 .form-status {
   min-height: 1.5em;
   font-size: 1rem;
   margin-top: -0.5em;
-  color: var(--turquoise);
+  color: var(--leaf);
 }
 .submission-note {
   text-align: center;
   margin-top: 1em;
-  color: var(--purple-dark);
+  color: var(--earth-dark);
   font-size: 0.98em;
 }
 
 footer {
   text-align: center;
   padding: 1.6rem 0 0.8rem 0;
-  background: linear-gradient(90deg, var(--turquoise-dark) 0%, var(--purple-dark) 100%);
+  background: linear-gradient(90deg, var(--leaf-dark) 0%, var(--earth-dark) 100%);
   color: var(--white);
   font-size: 1rem;
   margin-top: 3rem;
@@ -351,7 +354,7 @@ footer {
 .lightbox {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(109, 80, 187, 0.88);
+  background: rgba(46, 77, 54, 0.88);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -384,19 +387,19 @@ footer {
   right: 32px;
   top: 32px;
   font-size: 2.3rem;
-  color: var(--accent);
+  color: var(--accent-flower);
   cursor: pointer;
   z-index: 2;
   transition: color var(--transition);
 }
 .lightbox .close:hover {
-  color: var(--purple-dark);
+  color: var(--leaf-dark);
 }
 .download-btn {
   display: inline-block;
   margin-top: 1rem;
-  background: var(--turquoise);
-  color: var(--purple-dark);
+  background: var(--sky);
+  color: var(--leaf-dark);
   border-radius: 24px;
   padding: 0.55rem 1.4rem;
   text-decoration: none;
@@ -405,7 +408,7 @@ footer {
   font-weight: bold;
 }
 .download-btn:hover {
-  background: var(--accent);
+  background: var(--accent-flower);
   color: var(--white);
 }
 

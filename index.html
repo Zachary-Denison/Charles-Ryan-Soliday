@@ -8,7 +8,7 @@
 </head>
 <body>
   <nav>
-    <div class="logo">✨ Charles Ryan Soliday Memories</div>
+    <div class="logo"> Memory of Charles Ryan Soliday </div>
     <ul>
       <li><a href="#gallery" id="navGallery">Gallery</a></li>
       <li><a href="#videos" id="navVideos">Videos</a></li>
@@ -67,7 +67,13 @@
     <!-- SUBMIT FORM -->
     <section id="submit" class="contact-section">
       <h2>Share a Memory</h2>
-      <form id="submitForm" autocomplete="off" enctype="multipart/form-data">
+      <form 
+        id="submitForm" 
+        autocomplete="off" 
+        enctype="multipart/form-data"
+        action="https://formspree.io/f/xblypnno"
+        method="POST"
+      >
         <label>
           Your Name (optional)
           <input type="text" name="name">
@@ -88,7 +94,7 @@
         </label>
         <label id="fileUploadSection" style="display:none">
           Upload File
-          <input type="file" name="file" accept="image/*,video/*">
+          <input type="file" name="attachment" accept="image/*,video/*">
         </label>
         <label id="quoteInputSection" style="display:none">
           Your Quote or Memory
