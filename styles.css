@@ -1,10 +1,9 @@
 :root {
-  --bg: #ffffff;
+  --bg: #fff;
   --bg-light: #f7f7f7;
-  --text-main: #222222;
-  --text-muted: #555555;
-  --accent: #22314d;
-  --highlight: #cbb278;
+  --text-main: #22314d;    /* Navy */
+  --text-muted: #555;
+  --accent: #22314d;       /* Navy */
   --border: #e1e1e1;
   --shadow: 0 2px 12px rgba(34,49,77,0.05);
   --transition: 0.2s cubic-bezier(.85,0,.15,1);
@@ -13,7 +12,7 @@
 body {
   background: var(--bg);
   color: var(--text-main);
-  font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
   margin: 0;
   min-height: 100vh;
   transition: background var(--transition), color var(--transition);
@@ -35,6 +34,7 @@ nav .logo {
   font-weight: bold;
   color: var(--accent);
   letter-spacing: 1px;
+  text-shadow: none;
 }
 
 nav ul {
@@ -74,8 +74,10 @@ h2 {
   color: var(--accent);
   font-size: 1.45rem;
   margin-bottom: 1.1rem;
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 1.5px solid var(--accent);
   padding-bottom: 0.3rem;
+  background: none;
+  text-shadow: none;
 }
 
 main {
@@ -124,8 +126,8 @@ button {
 }
 
 button:hover {
-  background: var(--highlight);
-  color: var(--accent);
+  background: #182338;
+  color: #fff;
 }
 
 footer {
