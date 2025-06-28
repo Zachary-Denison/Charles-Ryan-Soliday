@@ -13,13 +13,12 @@ const videoItems = [
     alt: "Free Nitro?",
     download: "TF2 Funny1",
     tags: ["gaming", "funny"]
-  }
+  },
   {
     src: "media/Team Fortress 2 2022.09.03 - 01.00.01.15.DVR.mp4",
     alt: "Meow2?",
     download: "Meow2?",
     tags: ["gaming", "funny", "stupid"]
- 
   }
 ];
 
