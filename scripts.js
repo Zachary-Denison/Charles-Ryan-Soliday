@@ -1,40 +1,39 @@
-// ========================
-// DATA ARRAYS (EDIT HERE)
-// ========================
-
-// PHOTOS: Add your photo objects here. Example:
-// { src: "media/charles-young.jpg", alt: "Charles at the lake", download: "charles-young.jpg", tags: ["lake","summer"] }
 const photoItems = [
-  // Add photo objects here
 ];
 
-// VIDEOS: Add your video objects here. Example:
-// { src: "media/charles-birthday.mp4", alt: "Charles birthday party", download: "charles-birthday.mp4", tags: ["birthday"] }
 const videoItems = [
-  // Add video objects here
+  {
+    src: "media/,eeeeow.mp4",
+    alt: "Meowing Party",
+    download: "eeeeow.mp4",
+    tags: ["gaming", "funny", "stupid"]
+  },
+  {
+    src: "media/Team Fortress 2 2022.11.10 - 21.35.45.06.DVR.mp4",
+    alt: "Free Nitro?",
+    download: "TF2 Funny1",
+    tags: ["gaming", "funny"]
+  }
+  {
+    src: "media/Team Fortress 2 2022.09.03 - 01.00.01.15.DVR.mp4",
+    alt: "Meow2?",
+    download: "Meow2?",
+    tags: ["gaming", "funny", "stupid"]
+ 
+  }
 ];
 
-// QUOTES: Add quotes here. Example:
-// { text: "Charles always made us laugh.", author: "Jane Smith", tags: ["humor","family"] }
 const quotes = [
-  // Add quote objects here
 ];
 
-// Memories for Memory Wall. Example:
-// { title: "That Summer Road Trip", text: "An epic adventure...", tags: ["summer","road trip"] }
 const memoryWall = [
-  // Add memory objects here
 ];
 
-// ================================
-// TAG FILTER LOGIC FOR PHOTOS/VIDEOS
-// ================================
 
 function uniqueTags(items) {
   return Array.from(new Set(items.flatMap(item => item.tags || []))).sort();
 }
 
-// ---- PHOTO TAG FILTER ----
 const tagFilterPhotos = document.getElementById("tagFilterPhotos");
 let selectedTagPhoto = null;
 function renderTagButtonsPhotos() {
@@ -51,7 +50,6 @@ tagFilterPhotos.addEventListener("click", function(e) {
   }
 });
 
-// ---- VIDEO TAG FILTER ----
 const tagFilterVideos = document.getElementById("tagFilterVideos");
 let selectedTagVideo = null;
 function renderTagButtonsVideos() {
@@ -68,9 +66,6 @@ tagFilterVideos.addEventListener("click", function(e) {
   }
 });
 
-// ===============================
-// GALLERY RENDERING (PHOTOS ONLY)
-// ===============================
 const galleryGrid = document.getElementById("galleryGrid");
 function renderGallery() {
   galleryGrid.innerHTML = "";
@@ -84,9 +79,6 @@ function renderGallery() {
     });
 }
 
-// ===============================
-// VIDEO RENDERING (VIDEOS ONLY)
-// ===============================
 const videoGrid = document.getElementById("videoGrid");
 function renderVideos() {
   videoGrid.innerHTML = "";
@@ -103,9 +95,6 @@ function renderVideos() {
     });
 }
 
-// ===============================
-// QUOTES RENDERING
-// ===============================
 const quotesList = document.getElementById("quotesList");
 function renderQuotes() {
   quotesList.innerHTML = "";
@@ -119,9 +108,6 @@ function renderQuotes() {
   });
 }
 
-// ===============================
-// MEMORY WALL RENDERING
-// ===============================
 const memoryMasonry = document.getElementById("memoryMasonry");
 function renderMemoryWall() {
   memoryMasonry.innerHTML = "";
@@ -134,15 +120,11 @@ function renderMemoryWall() {
   });
 }
 
-// ===============================
-// LIGHTBOX (SHARED FOR PHOTOS/VIDEOS)
-// ===============================
 const lightbox = document.getElementById("lightbox");
 const lightboxContent = document.getElementById("lightboxContent");
 const closeLightbox = document.getElementById("closeLightbox");
 const downloadBtn = document.getElementById("downloadBtn");
 
-// Photos
 galleryGrid.addEventListener("click", function(e) {
   const idx = e.target.dataset.idx;
   if (typeof idx === "undefined") return;
@@ -156,7 +138,6 @@ galleryGrid.addEventListener("click", function(e) {
   img.alt = item.alt;
   lightboxContent.appendChild(img);
 });
-// Videos
 videoGrid.addEventListener("click", function(e) {
   const idx = e.target.dataset.idx;
   if (typeof idx === "undefined") return;
@@ -182,9 +163,6 @@ lightbox.addEventListener("click", function(e) {
   if (e.target === lightbox) closeLightbox.click();
 });
 
-// ===================================
-// TRIP DOWN MEMORY LANE RANDOMIZER
-// ===================================
 
 const tripTagsDiv = document.getElementById("tripTags");
 const memoryLaneRandomBtn = document.getElementById("memoryLaneRandomBtn");
@@ -285,9 +263,6 @@ function showNextTripLane() {
 memoryLaneRandomBtn.onclick = randomizeTripLane;
 memoryLaneNextBtn.onclick = showNextTripLane;
 
-// ===============================
-// NAVIGATION TABS SMOOTH SCROLL
-// ===============================
 document.querySelectorAll("nav a").forEach(a => {
   a.addEventListener("click", function(e) {
     const target = document.getElementById(this.getAttribute("href").slice(1));
@@ -298,9 +273,6 @@ document.querySelectorAll("nav a").forEach(a => {
   });
 });
 
-// ===============================
-// SUBMIT FORM LOGIC
-// ===============================
 const submitForm = document.getElementById("submitForm");
 const formStatus = document.getElementById("formStatus");
 const fileUploadSection = document.getElementById("fileUploadSection");
@@ -340,7 +312,6 @@ submitForm.addEventListener("submit", function (e) {
     body += `\nContent:\n${submitForm.quoteText.value}\n`;
   }
 
-  // Use mailto: for demonstration. (You can hook this to a backend or Formspree for real uploads.)
   const mailto = `mailto:tsx4wu@virginia.edu?subject=New Memory Submission%20for%20Charles%20Ryan%20Soliday&body=${encodeURIComponent(body)}`;
   window.open(mailto, '_blank');
   formStatus.textContent = "Thank you for your submission! We'll review and add it soon.";
