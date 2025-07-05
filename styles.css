@@ -1,164 +1,72 @@
 :root {
-  --bg: #fff;
-  --bg-light: #f7f7f7;
-  --text-main: #22314d;    /* Navy */
-  --text-muted: #555;
-  --accent: #22314d;       /* Navy */
-  --border: #e1e1e1;
-  --shadow: 0 2px 12px rgba(34,49,77,0.05);
-  --transition: 0.2s cubic-bezier(.85,0,.15,1);
+  --blue: #1f3b87;   /* deep blue */
+  --gold: #cfa800;   /* warm gold */
 }
 
+/* GLOBAL RESET & LAYOUT */
+* { box-sizing: border-box; }
 body {
-  background: var(--bg);
-  color: var(--text-main);
-  font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
   margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: #fff;
+  color: var(--blue);
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  transition: background var(--transition), color var(--transition);
 }
 
-nav {
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 2rem;
-  box-shadow: var(--shadow);
+/* HEADER + NAV */
+header {
+  padding: 2rem 1rem;
+  text-align: center;
+  border-bottom: 4px solid var(--gold);
 }
+h1 { margin: 0; font-size: 2.5rem; }
+h1 span { color: var(--gold); }
 
-nav .logo {
-  font-family: 'Merriweather', serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent);
-  letter-spacing: 1px;
-  text-shadow: none;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 1.4rem;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--text-main);
-  font-weight: 500;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: color var(--transition);
-}
-
-nav a:hover,
-nav a:focus {
-  color: var(--accent);
-  text-decoration: underline;
-}
-
-section {
-  background: var(--bg-light);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 2rem 1.5rem;
-  margin: 2rem 0;
-}
-
-h2 {
-  font-family: 'Merriweather', serif;
-  font-weight: 700;
-  color: var(--accent);
-  font-size: 1.45rem;
-  margin-bottom: 1.1rem;
-  border-bottom: 1.5px solid var(--accent);
-  padding-bottom: 0.3rem;
-  background: none;
-  text-shadow: none;
-}
-
-main {
-  max-width: 900px;
-  margin: 2.5rem auto;
-  padding: 0 1rem;
-}
-
-label {
-  color: var(--text-main);
-  font-weight: 600;
-  margin-bottom: 0.35em;
-  display: block;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 0.7em 0.9em;
-  margin-top: 0.15em;
-  border: 1.5px solid var(--border);
-  border-radius: 6px;
-  font-size: 1rem;
-  background: var(--bg);
-  color: var(--text-main);
-  font-family: inherit;
-  transition: border var(--transition);
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--accent);
-  outline: none;
-}
-
-button {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.85em 2em;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 1em;
+nav { margin-top: 1rem; }
+nav button {
+  margin: 0 .5rem;
+  padding: .5rem 1rem;
+  border: 2px solid var(--blue);
+  background: transparent;
+  color: var(--blue);
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
-  box-shadow: var(--shadow);
+  border-radius: .5rem;
+  transition: background .2s;
 }
-
-button:hover {
-  background: #182338;
+nav button:hover {
+  background: var(--blue);
   color: #fff;
 }
 
+/* MAIN CONTENT */
+main { flex: 1; width: 90%; max-width: 1200px; margin: 2rem auto; }
+.section { margin-bottom: 3rem; }
+.section-header {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  border-left: 6px solid var(--gold);
+  padding-left: .5rem;
+}
+
+/* GRID GALLERIES */
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* MEMORY WALL CARDS */
+.memory-card {
+  border: 2px solid var(--blue);
+  border-radius: .75rem;
+  padding: 1rem;
+}
+
+/* FOOTER */
 footer {
   text-align: center;
-  padding: 1.3rem 0 1rem 0;
-  background: var(--bg);
-  color: var(--text-muted);
-  font-size: 1rem;
-  border-top: 1px solid var(--border);
-  margin-top: 2rem;
-}
-
-.submission-note {
-  text-align: center;
-  margin-top: 1em;
-  color: var(--text-muted);
-  font-size: 0.97em;
-}
-
-.form-status {
-  min-height: 1.2em;
-  font-size: 1rem;
-  color: var(--accent);
-  margin-top: 0.3em;
-}
-
-@media (max-width: 700px) {
-  nav, main {
-    padding: 1rem;
-  }
-  section {
-    padding: 1.1rem 0.7rem;
-  }
+  padding: 1rem;
+  border-top: 4px solid var(--gold);
 }

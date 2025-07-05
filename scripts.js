@@ -1,335 +1,137 @@
-const photoItems = [
-];
-
-const videoItems = [
-  {
-    src: "media/,eeeeow.mp4",
-    alt: "Meowing Party",
-    download: "eeeeow.mp4",
-    tags: ["gaming", "funny", "stupid"]
-  },
-  {
-    src: "media/Team Fortress 2 2022.11.10 - 21.35.45.06.DVR.mp4",
-    alt: "Free Nitro?",
-    download: "TF2 Funny1",
-    tags: ["gaming", "funny"]
-  },
-  {
-    src: "media/Team Fortress 2 2022.09.03 - 01.00.01.15.DVR.mp4",
-    alt: "Meow2?",
-    download: "Meow2?",
-    tags: ["gaming", "funny", "stupid"]
-  }
-];
-
-const quotes = [
-];
-
-const memoryWall = [
-];
-
-
-function uniqueTags(items) {
-  return Array.from(new Set(items.flatMap(item => item.tags || []))).sort();
-}
-
-const tagFilterPhotos = document.getElementById("tagFilterPhotos");
-let selectedTagPhoto = null;
-function renderTagButtonsPhotos() {
-  const allTags = uniqueTags(photoItems);
-  tagFilterPhotos.innerHTML =
-    `<button class="tag-btn${selectedTagPhoto===null?" active":""}" data-tag="">All</button>` +
-    allTags.map(tag => `<button class="tag-btn${selectedTagPhoto===tag?" active":""}" data-tag="${tag}">${tag}</button>`).join('');
-}
-tagFilterPhotos.addEventListener("click", function(e) {
-  if (e.target.classList.contains("tag-btn")) {
-    selectedTagPhoto = e.target.dataset.tag || null;
-    renderTagButtonsPhotos();
-    renderGallery();
-  }
-});
-
-const tagFilterVideos = document.getElementById("tagFilterVideos");
-let selectedTagVideo = null;
-function renderTagButtonsVideos() {
-  const allTags = uniqueTags(videoItems);
-  tagFilterVideos.innerHTML =
-    `<button class="tag-btn${selectedTagVideo===null?" active":""}" data-tag="">All</button>` +
-    allTags.map(tag => `<button class="tag-btn${selectedTagVideo===tag?" active":""}" data-tag="${tag}">${tag}</button>`).join('');
-}
-tagFilterVideos.addEventListener("click", function(e) {
-  if (e.target.classList.contains("tag-btn")) {
-    selectedTagVideo = e.target.dataset.tag || null;
-    renderTagButtonsVideos();
-    renderVideos();
-  }
-});
-
-const galleryGrid = document.getElementById("galleryGrid");
-function renderGallery() {
-  galleryGrid.innerHTML = "";
-  photoItems
-    .filter(item => !selectedTagPhoto || (item.tags && item.tags.includes(selectedTagPhoto)))
-    .forEach((item, i) => {
-      const el = document.createElement("div");
-      el.className = "gallery-item";
-      el.innerHTML = `<img src="${item.src}" alt="${item.alt}" data-idx="${i}" />`;
-      galleryGrid.appendChild(el);
-    });
-}
-
-const videoGrid = document.getElementById("videoGrid");
-function renderVideos() {
-  videoGrid.innerHTML = "";
-  videoItems
-    .filter(item => !selectedTagVideo || (item.tags && item.tags.includes(selectedTagVideo)))
-    .forEach((item, i) => {
-      const el = document.createElement("div");
-      el.className = "gallery-item";
-      el.innerHTML = `
-        <img src="media/video-thumb.jpg" alt="${item.alt}" data-idx="${i}" />
-        <button class="play-btn" title="Play Clip" data-idx="${i}">&#9658;</button>
-      `;
-      videoGrid.appendChild(el);
-    });
-}
-
-const quotesList = document.getElementById("quotesList");
-function renderQuotes() {
-  quotesList.innerHTML = "";
-  quotes.forEach(q => {
-    const block = document.createElement("div");
-    block.className = "quote-block";
-    block.innerHTML =
-      `<span>${q.text}</span>
-       <span class="quote-author">— ${q.author || "Anonymous"}</span>`;
-    quotesList.appendChild(block);
-  });
-}
-
-const memoryMasonry = document.getElementById("memoryMasonry");
-function renderMemoryWall() {
-  memoryMasonry.innerHTML = "";
-  memoryWall.forEach((mem, idx) => {
-    const block = document.createElement("div");
-    block.className = "memory-block";
-    block.style.animationDelay = (0.1 * idx) + "s";
-    block.innerHTML = `<h4>${mem.title}</h4><p>${mem.text}</p>`;
-    memoryMasonry.appendChild(block);
-  });
-}
-
-const lightbox = document.getElementById("lightbox");
-const lightboxContent = document.getElementById("lightboxContent");
-const closeLightbox = document.getElementById("closeLightbox");
-const downloadBtn = document.getElementById("downloadBtn");
-
-galleryGrid.addEventListener("click", function(e) {
-  const idx = e.target.dataset.idx;
-  if (typeof idx === "undefined") return;
-  const item = photoItems[idx];
-  lightbox.classList.remove("hidden");
-  lightboxContent.innerHTML = "";
-  downloadBtn.href = item.src;
-  downloadBtn.download = item.download;
-  const img = document.createElement("img");
-  img.src = item.src;
-  img.alt = item.alt;
-  lightboxContent.appendChild(img);
-});
-videoGrid.addEventListener("click", function(e) {
-  const idx = e.target.dataset.idx;
-  if (typeof idx === "undefined") return;
-  const item = videoItems[idx];
-  if (!item) return;
-  lightbox.classList.remove("hidden");
-  lightboxContent.innerHTML = "";
-  downloadBtn.href = item.src;
-  downloadBtn.download = item.download;
-  const vid = document.createElement("video");
-  vid.src = item.src;
-  vid.controls = true;
-  vid.autoplay = true;
-  vid.style.maxHeight = "54vh";
-  vid.style.borderRadius = "10px";
-  lightboxContent.appendChild(vid);
-});
-closeLightbox.onclick = () => {
-  lightbox.classList.add("hidden");
-  lightboxContent.innerHTML = "";
+/*********  CONFIG  *********/
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
 };
-lightbox.addEventListener("click", function(e) {
-  if (e.target === lightbox) closeLightbox.click();
+const ADMIN_EMAIL = "zachary.t.denison@gmail.com";
+
+/*********  INIT  *********/
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
+const store = firebase.storage();
+
+/*********  NAV HELPERS  *********/
+const $ = s => document.querySelector(s);
+const sections = {
+  photos:       $("#photos"),
+  videos:       $("#videos"),
+  memoryWall:   $("#memory-wall"),
+  upload:       $("#upload-section"),
+  pending:      $("#pending")
+};
+function show(id) {
+  Object.values(sections).forEach(sec => sec.hidden = true);
+  if (sections[id]) sections[id].hidden = false;
+}
+
+/*********  NAV BUTTONS  *********/
+$("#btn-photos"     ).onclick = () => show("photos");
+$("#btn-videos"     ).onclick = () => show("videos");
+$("#btn-memory-wall").onclick = () => show("memoryWall");
+$("#btn-random"     ).onclick = randomMemory;
+
+/*********  AUTH FLOW  *********/
+const provider = new firebase.auth.GoogleAuthProvider();
+$("#btn-login" ).onclick = () => auth.signInWithPopup(provider);
+$("#btn-logout").onclick = () => auth.signOut();
+
+auth.onAuthStateChanged(user => {
+  const loggedIn = !!user;
+  $("#btn-login" ).hidden =  loggedIn;
+  $("#btn-logout").hidden = !loggedIn;
+  sections.upload .hidden = !loggedIn;
+  sections.pending.hidden = !(loggedIn && user.email === ADMIN_EMAIL);
+
+  if (loggedIn) { loadMedia(); loadMemories(); if (user.email === ADMIN_EMAIL) loadPending(); }
 });
 
-
-const tripTagsDiv = document.getElementById("tripTags");
-const memoryLaneRandomBtn = document.getElementById("memoryLaneRandomBtn");
-const memoryLaneNextBtn = document.getElementById("memoryLaneNextBtn");
-const tripDisplay = document.getElementById("tripDisplay");
-let tripLaneTag = null;
-let tripLaneItems = [];
-let tripCurrentIdx = -1;
-let tripLastType = null;
-
-function getAllMemoryLaneTags() {
-  return uniqueTags([
-    ...photoItems, ...videoItems, ...quotes, ...memoryWall
-  ]);
-}
-function renderTripTags() {
-  const tags = getAllMemoryLaneTags();
-  tripTagsDiv.innerHTML =
-    `<button class="tag-btn${tripLaneTag===null?" active":""}" data-tag="">All</button>` +
-    tags.map(tag => `<button class="tag-btn${tripLaneTag===tag?" active":""}" data-tag="${tag}">${tag}</button>`).join('');
-}
-tripTagsDiv.addEventListener("click", function(e) {
-  if (e.target.classList.contains("tag-btn")) {
-    tripLaneTag = e.target.dataset.tag || null;
-    renderTripTags();
-    tripCurrentIdx = -1;
-    tripLaneItems = []; // Reset so next click randomizes fresh
-    tripDisplay.innerHTML = "";
-    memoryLaneNextBtn.style.display = "none";
-  }
-});
-
-function collectTripLaneItems() {
-  // Combine all types, annotate with type
-  let arr = [];
-  photoItems.forEach((item, i) => {
-    if (!tripLaneTag || (item.tags && item.tags.includes(tripLaneTag)))
-      arr.push({ ...item, type: "photo", idx: i });
-  });
-  videoItems.forEach((item, i) => {
-    if (!tripLaneTag || (item.tags && item.tags.includes(tripLaneTag)))
-      arr.push({ ...item, type: "video", idx: i });
-  });
-  quotes.forEach((item, i) => {
-    if (!tripLaneTag || (item.tags && item.tags.includes(tripLaneTag)))
-      arr.push({ ...item, type: "quote", idx: i });
-  });
-  memoryWall.forEach((item, i) => {
-    if (!tripLaneTag || (item.tags && item.tags.includes(tripLaneTag)))
-      arr.push({ ...item, type: "memory", idx: i });
-  });
-  return arr;
-}
-function showTripMemory(idx) {
-  if (!tripLaneItems.length) {
-    tripDisplay.innerHTML = "<em>No memories found for that tag. Try another tag or add more content!</em>";
-    memoryLaneNextBtn.style.display = "none";
-    return;
-  }
-  const item = tripLaneItems[idx];
-  tripDisplay.innerHTML = "";
-  if (item.type === "photo") {
-    const img = document.createElement("img");
-    img.src = item.src;
-    img.alt = item.alt;
-    img.style.maxWidth = "100%";
-    tripDisplay.appendChild(img);
-    if (item.alt) tripDisplay.innerHTML += `<div style="margin:0.5em 0">${item.alt}</div>`;
-  } else if (item.type === "video") {
-    const vid = document.createElement("video");
-    vid.src = item.src;
-    vid.controls = true;
-    vid.autoplay = true;
-    vid.style.maxWidth = "100%";
-    tripDisplay.appendChild(vid);
-    if (item.alt) tripDisplay.innerHTML += `<div style="margin:0.5em 0">${item.alt}</div>`;
-  } else if (item.type === "quote") {
-    tripDisplay.innerHTML = `<div class="quote-block"><span>${item.text}</span><span class="quote-author">— ${item.author || "Anonymous"}</span></div>`;
-  } else if (item.type === "memory") {
-    tripDisplay.innerHTML = `<div class="memory-block"><h4>${item.title}</h4><p>${item.text}</p></div>`;
-  }
-  memoryLaneNextBtn.style.display = tripLaneItems.length > 1 ? "inline-block" : "none";
-}
-function randomizeTripLane() {
-  tripLaneItems = collectTripLaneItems();
-  if (!tripLaneItems.length) {
-    showTripMemory(0);
-    return;
-  }
-  tripCurrentIdx = Math.floor(Math.random() * tripLaneItems.length);
-  showTripMemory(tripCurrentIdx);
-}
-function showNextTripLane() {
-  if (!tripLaneItems.length) return;
-  tripCurrentIdx = (tripCurrentIdx + 1) % tripLaneItems.length;
-  showTripMemory(tripCurrentIdx);
-}
-memoryLaneRandomBtn.onclick = randomizeTripLane;
-memoryLaneNextBtn.onclick = showNextTripLane;
-
-document.querySelectorAll("nav a").forEach(a => {
-  a.addEventListener("click", function(e) {
-    const target = document.getElementById(this.getAttribute("href").slice(1));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
+/*********  LOADERS  *********/
+async function loadMedia() {
+  const snap = await db.collection("media").where("approved","==",true).get();
+  const photos = $("#photo-grid");  const videos = $("#video-grid");
+  photos.innerHTML = videos.innerHTML = "";
+  snap.forEach(doc => {
+    const m = doc.data();
+    if (m.type === "photo") {
+      photos.innerHTML += `<a href="${m.url}" data-lightbox="photos" data-title="${m.title} — ${m.author}">
+                            <img src="${m.url}" alt="${m.title}" style="width:100%;border-radius:.5rem;">
+                           </a>`;
+    } else {
+      const id = `v_${doc.id}`;
+      videos.innerHTML += `<video id="${id}" class="video-js vjs-default-skin" controls preload="auto" width="100%" data-setup='{"fluid":true}'>
+                             <source src="${m.url}" type="video/mp4">
+                           </video>`;
     }
   });
-});
+}
 
-const submitForm = document.getElementById("submitForm");
-const formStatus = document.getElementById("formStatus");
-const fileUploadSection = document.getElementById("fileUploadSection");
-const quoteInputSection = document.getElementById("quoteInputSection");
+async function loadMemories() {
+  const list = $("#memory-list");
+  const snap = await db.collection("memories").where("approved","==",true).orderBy("timestamp","desc").get();
+  list.innerHTML = "";
+  snap.forEach(d => {
+    const m = d.data();
+    list.innerHTML += `<div class="memory-card"><strong>${m.title}</strong>
+                       <p>${m.text}</p><small>— ${m.author}</small></div>`;
+  });
+}
 
-submitForm.type.value = "";
-submitForm.file.value = "";
-submitForm.quoteText.value = "";
+/*********  RANDOM MEMORY  *********/
+async function randomMemory() {
+  const snap = await db.collection("memories").where("approved","==",true).get();
+  if (!snap.size) return alert("No memories yet.");
+  const pick = snap.docs[Math.floor(Math.random()*snap.size)].data();
+  alert(`${pick.title}\n\n${pick.text}\n\n— ${pick.author}`);
+}
 
-// Show/hide fields depending on type
-submitForm.type.addEventListener("change", function () {
-  const val = this.value;
-  fileUploadSection.style.display = (val === "photo" || val === "video") ? "" : "none";
-  quoteInputSection.style.display = (val === "quote" || val === "memory") ? "" : "none";
-  if (val !== "photo" && val !== "video") submitForm.file.value = "";
-  if (val !== "quote" && val !== "memory") submitForm.quoteText.value = "";
-});
-
-// On submit, send to email (mailto: fallback) and block actual upload
-submitForm.addEventListener("submit", function (e) {
+/*********  UPLOAD FLOW  *********/
+$("#upload-form").addEventListener("submit", async e => {
   e.preventDefault();
-  // Compose email body
-  const name = submitForm.name.value;
-  const email = submitForm.email.value;
-  const type = submitForm.type.value;
-  const tags = submitForm.tags.value;
-  let body = `Submission for Charles Ryan Soliday website\n\n`;
-  if (name) body += `From: ${name}\n`;
-  if (email) body += `Email: ${email}\n`;
-  body += `Type: ${type}\n`;
-  if (tags) body += `Tags: ${tags}\n`;
+  const file = $("#file-input").files[0];
+  if (!file) return;
+  const user = auth.currentUser;
+  const isAdmin = user.email === ADMIN_EMAIL;
 
-  if (type === "photo" || type === "video") {
-    body += `File: (attached or to be uploaded)\n`;
-  }
-  if (type === "quote" || type === "memory") {
-    body += `\nContent:\n${submitForm.quoteText.value}\n`;
-  }
+  const ref = store.ref(`${isAdmin?"approved":"pending"}/${Date.now()}_${file.name}`);
+  await ref.put(file);
+  const url = await ref.getDownloadURL();
 
-  const mailto = `mailto:tsx4wu@virginia.edu?subject=New Memory Submission%20for%20Charles%20Ryan%20Soliday&body=${encodeURIComponent(body)}`;
-  window.open(mailto, '_blank');
-  formStatus.textContent = "Thank you for your submission! We'll review and add it soon.";
-  submitForm.reset();
-  fileUploadSection.style.display = "none";
-  quoteInputSection.style.display = "none";
-  setTimeout(() => { formStatus.textContent = ""; }, 6000);
+  await db.collection("media").add({
+    url, title: $("#title-input").value,
+    tags: $("#tags-input").value.split(/, *|$/).filter(Boolean),
+    type: file.type.startsWith("video") ? "video" : "photo",
+    author: user.displayName || user.email,
+    email: user.email,
+    approved: isAdmin,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  $("#upload-status").textContent = isAdmin ? "Uploaded & live!" : "Uploaded – awaiting approval.";
+  e.target.reset();
+  if (isAdmin) loadMedia();
 });
 
-// ===============================
-// INITIAL PAGE LOAD
-// ===============================
-window.addEventListener('DOMContentLoaded', () => {
-  document.body.style.opacity = 1;
-  renderTagButtonsPhotos();
-  renderGallery();
-  renderTagButtonsVideos();
-  renderVideos();
-  renderQuotes();
-  renderMemoryWall();
-  renderTripTags();
-});
+/*********  ADMIN DASH  *********/
+async function loadPending() {
+  const list = $("#pending-list");
+  const snap = await db.collection("media").where("approved","==",false).get();
+  list.innerHTML = "";
+  snap.forEach(doc => {
+    const m = doc.data();
+    list.innerHTML += `<div class="memory-card">
+        <p><strong>${m.title}</strong> (${m.type})<br>by ${m.author}</p>
+        <button onclick="approve('${doc.id}')">Approve</button>
+        <button onclick="deny('${doc.id}')">Delete</button>
+      </div>`;
+  });
+}
+async function approve(id){ await db.collection("media").doc(id).update({approved:true}); loadPending(); loadMedia(); }
+async function deny(id){ await db.collection("media").doc(id).delete(); loadPending(); }
+
+/*********  MISC  *********/
+$("#year").textContent = new Date().getFullYear();

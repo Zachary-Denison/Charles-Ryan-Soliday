@@ -1,128 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Remembering Charles Ryan Soliday</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <nav>
-    <div class="logo"> Memory of Charles Ryan Soliday </div>
-    <ul>
-      <li><a href="#gallery" id="navGallery">Gallery</a></li>
-      <li><a href="#videos" id="navVideos">Videos</a></li>
-      <li><a href="#quotes" id="navQuotes">Quotes</a></li>
-      <li><a href="#memory-wall" id="navMemoryWall">Memory Wall</a></li>
-      <li><a href="#submit" id="navSubmit">Submit</a></li>
-    </ul>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remembering Charles Ryan Soliday</title>
 
-  <!-- Trip Down Memory Lane Feature -->
-  <section class="trip-memory-lane" id="tripMemoryLane">
-    <h2>✨ Trip Down Memory Lane</h2>
-    <div class="trip-controls">
-      <div class="trip-tags" id="tripTags"></div>
-      <button id="memoryLaneRandomBtn">Show Me a Memory</button>
-      <button id="memoryLaneNextBtn" style="display:none">Next</button>
-      <div class="trip-display" id="tripDisplay"></div>
-    </div>
-  </section>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css" />
 
-  <main>
-    <!-- GALLERY PHOTOS -->
-    <section id="gallery" class="gallery-section">
-      <h2>Photo Gallery</h2>
-      <div class="tag-filter" id="tagFilterPhotos"></div>
-      <div class="gallery-grid" id="galleryGrid">
-        <!-- JS: Photos will go here -->
-      </div>
-    </section>
+    <!-- Lightbox2 & Video.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.min.css" rel="stylesheet" />
 
-    <!-- VIDEOS -->
-    <section id="videos" class="videos-section">
-      <h2>Video Gallery</h2>
-      <div class="tag-filter" id="tagFilterVideos"></div>
-      <div class="gallery-grid" id="videoGrid">
-        <!-- JS: Videos will go here -->
-      </div>
-    </section>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-storage-compat.js"></script>
 
-    <!-- QUOTES -->
-    <section id="quotes" class="quotes-section">
-      <h2>Quotes & Stories</h2>
-      <div class="quotes-list" id="quotesList">
-        <!-- JS: Quotes go here -->
-      </div>
-    </section>
+    <!-- Lightbox2 & Video.js JS (load before your own code so they’re ready) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" defer></script>
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js" defer></script>
 
-    <!-- MEMORY WALL -->
-    <section id="memory-wall" class="memory-wall-section">
-      <h2>Memory Wall</h2>
-      <div class="memory-masonry" id="memoryMasonry">
-        <!-- JS: Memories go here -->
-      </div>
-    </section>
+    <!-- Your own JS -->
+    <script src="app.js" defer></script>
+  </head>
 
-    <!-- SUBMIT FORM -->
-    <section id="submit" class="contact-section">
-      <h2>Share a Memory</h2>
-      <form 
-        id="submitForm" 
-        autocomplete="off" 
-        enctype="multipart/form-data"
-        action="https://formspree.io/f/xblypnno"
-        method="POST"
-      >
-        <label>
-          Your Name (optional)
-          <input type="text" name="name">
-        </label>
-        <label>
-          Email (for follow-up or approval, optional)
-          <input type="email" name="email">
-        </label>
-        <label>
-          What are you submitting?
-          <select name="type" required>
-            <option value="">--Select--</option>
-            <option value="photo">Photo</option>
-            <option value="video">Video</option>
-            <option value="quote">Quote</option>
-            <option value="memory">Memory</option>
-          </select>
-        </label>
-        <label id="fileUploadSection" style="display:none">
-          Upload File
-          <input type="file" name="attachment" accept="image/*,video/*">
-        </label>
-        <label id="quoteInputSection" style="display:none">
-          Your Quote or Memory
-          <textarea name="quoteText" rows="4"></textarea>
-        </label>
-        <label>
-          Tags (comma separated, optional)
-          <input type="text" name="tags" placeholder="e.g. school, family, summer">
-        </label>
-        <button type="submit">Submit</button>
-        <div class="form-status" id="formStatus"></div>
-      </form>
-      <div class="submission-note">
-        <strong>Note:</strong> Submissions are reviewed before being posted. You will receive a confirmation/approval email.
-      </div>
-    </section>
-  </main>
+  <body>
+    <!-- ------------  HEADER ------------ -->
+    <header>
+      <h1><span>Remembering</span> Charles Ryan Soliday</h1>
+      <nav>
+        <button id="btn-photos">Photos</button>
+        <button id="btn-videos">Videos</button>
+        <button id="btn-memory-wall">Memory Wall</button>
+        <button id="btn-random">Trip Down Memory Lane</button>
+        <button id="btn-login">Login with Google</button>
+        <button id="btn-logout" style="display:none;">Logout</button>
+      </nav>
+    </header>
 
-  <footer>
-    <p>&copy; 2025 Remembering Charles Ryan Soliday. All rights reserved.</p>
-  </footer>
+    <!-- ------------  MAIN SECTIONS ------------ -->
+    <main>
+      <!-- Photo Gallery -->
+      <section id="photos" class="section" hidden>
+        <h2 class="section-header">Photo Gallery</h2>
+        <div id="photo-grid" class="grid"></div>
+      </section>
 
-  <div id="lightbox" class="lightbox hidden">
-    <span class="close" id="closeLightbox">&times;</span>
-    <div class="lightbox-content" id="lightboxContent"></div>
-    <a href="#" download id="downloadBtn" class="download-btn">Download</a>
-  </div>
+      <!-- Video Gallery -->
+      <section id="videos" class="section" hidden>
+        <h2 class="section-header">Video Gallery</h2>
+        <div id="video-grid" class="grid"></div>
+      </section>
 
-  <script src="scripts.js"></script>
-</body>
+      <!-- Memory Wall -->
+      <section id="memory-wall" class="section" hidden>
+        <h2 class="section-header">Memory Wall</h2>
+        <div id="memory-list" class="grid"></div>
+      </section>
+
+      <!-- Upload Form (shown after login) -->
+      <section id="upload-section" class="section" hidden>
+        <h2 class="section-header">Share a Memory</h2>
+        <form id="upload-form">
+          <input type="file" id="file-input" required />
+          <input type="text" id="title-input" placeholder="Title" required />
+          <input type="text" id="tags-input" placeholder="Tags (comma‑separated)" />
+          <textarea id="memory-text" placeholder="Say something… (optional)"></textarea>
+          <button type="submit">Upload</button>
+        </form>
+        <p id="upload-status"></p>
+      </section>
+
+      <!-- Admin Pending Queue -->
+      <section id="pending" class="section" hidden>
+        <h2 class="section-header">Pending Approvals</h2>
+        <div id="pending-list" class="grid"></div>
+      </section>
+    </main>
+
+    <!-- ------------  FOOTER ------------ -->
+    <footer>
+      © <span id="year"></span> charlesryansoliday.com
+    </footer>
+  </body>
 </html>
